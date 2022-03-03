@@ -40,19 +40,18 @@ if(strReferer == null){
   
   try{
 	  conn = DAO.getConnection();
-	 String sql = "SELECT M.m_name, T.t_address, R.r_count ,R.r_no ";
-	         sql+= "FROM MOVIE M, THEATER T, RESERVATION R WHERE r.u_no = ? AND R.t_no = T.t_no AND r.m_no = M.m_no";
+	 String sql = "SELECT R.r_no, M.m_name, T.t_address, R.r_count ";
+	         sql+= "FROM MOVIE M, THEATER T, RESERVATION R WHERE r.u_no = ? AND R.t_no = T.t_no AND r.m_no = M.m_no ORDER BY r_no";
 	
 	
 	  ps = conn.prepareStatement(sql);
 	  ps.setInt(1, Ticketing_no);
-	  System.out.print(Ticketing_no + "");
 	  rs = ps.executeQuery();
 	  while(rs.next()) {
 		  String[] Ticketing = new String[4];
-		  Ticketing[0] = rs.getString(1);
+		  Ticketing[0] = rs.getInt(1) + "";
 		  Ticketing[1] = rs.getString(2);
-		  Ticketing[2] = rs.getInt(3) + "";
+		  Ticketing[2] = rs.getString(3);
 		  Ticketing[3] = rs.getInt(4) + "";
 		  userTicket.add(Ticketing);
 	  }
@@ -67,7 +66,7 @@ if(strReferer == null){
 <html>
 <head>
 <meta charset="UTF-8">
-<title>∙ Mypage ∙</title>
+<title>userTicketing</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/user.css">
 </head>
@@ -75,7 +74,6 @@ if(strReferer == null){
 <%@ include file="topmenu.jsp" %>
   <section>
     <%if(userTicket.size() > 0) {%>
-    <form action="userTicketingPro.jsp">
     <h2>예매정보</h2>
     <table>
       <tr>
@@ -85,18 +83,16 @@ if(strReferer == null){
       <%for(int i = 0; i < userTicket.size(); i ++) {%>
         <tr>
           <%String[] Ticketing = userTicket.get(i);%>
-          <td><%= Ticketing[0]%></td>
           <td><%= Ticketing[1]%></td>
           <td><%= Ticketing[2]%></td>
-          <td><input type="submit" value="예매취소">
-              <input type="hidden" name="r_no" value=<%= Ticketing[3]%>>
+          <td><%= Ticketing[3]%></td>
+          <td><input type="button" value="삭제" onclick="location.href='userTicketingPro.jsp?r_no=<%= Ticketing[0]%>'">
         </tr>
       <%} %>
       <tr>
       <td colspan="4"><button type="button" onclick="location.href='index.jsp'">돌아가기</button></td>
       </tr>
     </table>
-    </form>
     <%}else {%>
       <h2>예매내역이 없습니다.</h2>
       <button type="button" onclick="location.href='ticketList.jsp'">예매하러가기</button>
