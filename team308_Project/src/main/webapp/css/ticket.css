@@ -1,0 +1,60 @@
+@charset "UTF-8";
+section{
+	font-size: 1.2rem;
+}
+
+.ticketBox{
+	width: 100%;
+	min-height: 500px;
+	max-height: 500px;
+	overflow: auto;
+	background-color: white;
+	opacity: 0.7;
+	border-radius: 2rem;
+}
+.ticketHead{
+	text-align: center;
+}
+.ticketList{
+	padding: 15px;
+	cursor: pointer;
+}
+.ticketList:hover{
+	background: #c2c4c4;
+}
+.seatWrap{
+	margin: 50px;
+}
+.seat{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+input[type=checkbox] + label{
+	display: inline-block;
+	margin-left: 10px;
+	width: 80px;
+	height: 80px;
+	border: 2px solid #a9a49d;
+	border-radius: 0.8rem;
+	cursor: pointer;
+}
+input[type=checkbox] + label:hover{
+	background-color: rgba(255,255,255,0.5);
+}
+input[type=checkbox]:checked + label{
+	background-color: #a9a49d;
+}
+input[type=checkbox]{
+	display: none;
+}
+@media screen and (min-width: 800px) {
+	.ticket{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.ticketBox{
+		margin: 50px;
+	}
+}
